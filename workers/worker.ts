@@ -1,4 +1,5 @@
-import 'dotenv/config'
+import dotenv from "dotenv";
+dotenv.config();
 import { Worker } from 'bullmq'
 import { SendEmailCommand } from '@aws-sdk/client-ses'
 import {SESClient} from '@aws-sdk/client-ses'
