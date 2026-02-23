@@ -10,7 +10,14 @@ accessKeyId: process.env.AWS_ACCESS_KEY!,
 secretAccessKey: process.env.AWS_SECRET_KEY!
 }
 })
- 
+ const redisConnection = {
+  host: '127.0.0.1',
+  port: 6379,
+  password: process.env.REDIS_PASSWORD 
+};
+
+// In index.ts
+
 const worker = new Worker(
   'emails',
   async job => {
@@ -19,7 +26,7 @@ const worker = new Worker(
   const { to, subject, html } = job.data
 
  const command = new SendEmailCommand({
-Source: '[contact@culturays.com](mailto:contact@culturays.com)',
+Source: 'Urban Naija News <contact@culturays.com',
 Destination: { ToAddresses: [to] },
 Message: {
 Subject: { Data: subject },
@@ -32,16 +39,15 @@ Html: { Data: html }
 await ses.send(command)
     return true
   },
-  {
-    connection: {
-      host: '127.0.0.1',
-      port: 6379
-    }
-    ,limiter: {
+   { connection:
+     redisConnection,
+      limiter: {
       max: 5,
       duration: 1000    
   }
-  }
+  },
+   
+  
 )
 
 worker.on('completed', job => {

@@ -15,7 +15,7 @@ excerpt?:string
 const fastify = Fastify({ logger: true })
 
 fastify.register(import ('@fastify/cors'), {
-  origin: ['http://localhost:3000']
+  origin: ['http://localhost:3000', 'https://culturays.com', 'http://34.116.251.165']
 })
 
 /* SUPABASE */
@@ -25,13 +25,12 @@ const supabase = createClient(
 )
 
 fastify.decorate('supabase', supabase)
-
-const emailQueue = new Queue('emails', {
-  connection: {
-    host: '127.0.0.1',
-    port: 6379
-  }
-})
+ const redisConnection = {
+  host: '127.0.0.1',
+  port: 6379,
+  password: process.env.REDIS_PASSWORD 
+};
+const emailQueue = new Queue('emails', { connection: redisConnection });
 fastify.decorate('emailQueue', emailQueue)
 
 fastify.post('/admin/send-newsletter', async (req, reply ) => {
@@ -84,7 +83,7 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
         <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />
       
        <footer style="font-size: 13px; color: #999999; text-align: center;">
-         <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to Urban Naija News. <br/>" style="color:#00796b;">here</a>.</p>
+         <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to Urban Naija News. <br/> style="color:#00796b;"><a>here</a>.</p>
 
     </footer>
     </div>
@@ -96,10 +95,12 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
        replyTo: "contact@culturays.com",
       subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
-    }) 
+    })
 
-  return { scheduled: data?.length ?? 0 }
+    
 } 
+
+return { scheduled: data?.length ?? 0 }
 })
 
 fastify.listen({ port: 4000, host: '0.0.0.0' })
