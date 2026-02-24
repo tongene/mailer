@@ -27,6 +27,7 @@ const worker = new Worker(
 Source: 'contact@culturays.com',
 Destination: { ToAddresses: [to] },
 ReplyToAddresses: ["contact@culturays.com"],
+ConfigurationSetName: 'newsletter-tracking',
 Message: {
 Subject: { Data: subject },
 Body: {

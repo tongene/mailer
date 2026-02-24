@@ -103,4 +103,56 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
 return { scheduled: data?.length ?? 0 }
 })
 
+ 
+// Add this at the top of index.ts to handle AWS SNS text/plain bodies
+fastify.addContentTypeParser('text/plain', { parseAs: 'string' }, (req, body, done) => {
+  try {
+    const json = JSON.parse(body as string)
+    done(null, json)
+  } catch (err) {
+    done(null, body)
+  }
+})
+
+// The Webhook Route
+fastify.post('/webhooks/ses', async (request, reply) => {
+  const body = request.body as any
+
+  // When you first add the URL to AWS, they send a "SubscriptionConfirmation"
+  if (body.Type === 'SubscriptionConfirmation') {
+    console.log('Confirming SNS Subscription...')
+    // Use a simple fetch to confirm the subscription
+    await fetch(body.SubscribeURL)
+    return { status: 'confirmed' }
+  }
+
+  // 2. HANDLE SES NOTIFICATIONS
+  if (body.Type === 'Notification') {
+    const message = JSON.parse(body.Message)
+    const notificationType = message.notificationType // 'Bounce', 'Complaint', or 'Delivery'
+    const mail = message.mail
+    const emailAddress = mail.destination[0]
+
+    console.log(`SES Event: ${notificationType} for ${emailAddress}`)
+
+    // 3. UPDATE SUPABASE
+    if (notificationType === 'Bounce' || notificationType === 'Complaint') {
+      // Mark user as unsubscribed or "bounced" so you don't mail them again
+      await fastify.supabase
+        .from('newsletter_subscribers')
+        .update({ 
+          status: notificationType.toLowerCase(),
+          active: false 
+        })
+        .eq('email', emailAddress)
+    } 
+    
+    else if (notificationType === 'Delivery') {
+      // Optional: Log successful delivery
+      console.log(`Successfully delivered to ${emailAddress}`)
+    }
+  }
+
+  return { ok: true }
+})
 fastify.listen({ port: 4000, host: '0.0.0.0' })
