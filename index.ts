@@ -3,6 +3,8 @@ import 'dotenv/config'
 import Fastify from 'fastify'
 import { createClient } from '@supabase/supabase-js'
 import { Queue } from 'bullmq'
+import { fileURLToPath } from 'url'
+import path, { dirname } from 'path'
 export type CampaignProps={
 id?:number |string
 slug?:string
@@ -15,6 +17,15 @@ excerpt?:string
 }
 
 // This forces it to look for .env in the current directory
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+dotenv.config({
+  path: path.resolve(process.cwd(), '.env')
+})
+console.log("LOG: Redis Password Loaded:", process.env.REDIS_PASSWORD ? "YES" : "NO");
+console.log("LOG: AWS Key Loaded:", process.env.AWS_ACCESS_KEY ? "YES" : "NO");
 const fastify = Fastify({ logger: true })
 
 fastify.register(import ('@fastify/cors'), {
