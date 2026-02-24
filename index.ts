@@ -1,10 +1,16 @@
 import dotenv from 'dotenv'
 import 'dotenv/config'
+import path from 'path'
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+
+import { Queue, Worker } from 'bullmq';
+import {Redis} from 'ioredis';
+
+const REDIS_PASS = process.env.REDIS_PASSWORD;
 import Fastify from 'fastify'
 import { createClient } from '@supabase/supabase-js'
-import { Queue } from 'bullmq'
-import { fileURLToPath } from 'url'
-import path, { dirname } from 'path'
+ 
+
 export type CampaignProps={
 id?:number |string
 slug?:string
@@ -15,17 +21,7 @@ image?:string
 url?:string
 excerpt?:string
 }
-
-// This forces it to look for .env in the current directory
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-dotenv.config({
-  path: path.resolve(process.cwd(), '.env')
-})
-console.log("LOG: Redis Password Loaded:", process.env.REDIS_PASSWORD ? "YES" : "NO");
-console.log("LOG: AWS Key Loaded:", process.env.AWS_ACCESS_KEY ? "YES" : "NO");
+ 
 const fastify = Fastify({ logger: true })
 
 fastify.register(import ('@fastify/cors'), {
@@ -39,12 +35,16 @@ const supabase = createClient(
 )
 
 fastify.decorate('supabase', supabase)
- const redisConnection = {
+
+const connection = new Redis({
   host: '127.0.0.1',
   port: 6379,
-  password: process.env.REDIS_PASSWORD 
-};
-const emailQueue = new Queue('emails', { connection: redisConnection });
+  password: REDIS_PASS,
+  maxRetriesPerRequest: null,
+});
+
+connection.on('error', (err) => console.error('Redis Connection Error:', err));
+const emailQueue = new Queue('emails', { connection: connection });
 fastify.decorate('emailQueue', emailQueue)
 
 fastify.post('/admin/send-newsletter', async (req, reply ) => {

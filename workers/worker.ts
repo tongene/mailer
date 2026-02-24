@@ -15,8 +15,7 @@ secretAccessKey: process.env.AWS_SECRET_KEY!
   port: 6379,
   password: process.env.REDIS_PASSWORD 
 };
-console.log("DEBUG: AWS Key starts with:", process.env.AWS_ACCESS_KEY?.substring(0, 5));
-console.log("DEBUG: AWS Secret length:", process.env.AWS_SECRET_KEY?.length);
+ 
 const worker = new Worker(
   'emails',
   async job => {
@@ -28,7 +27,7 @@ const worker = new Worker(
 Source: 'contact@culturays.com',
 Destination: { ToAddresses: [to] },
 ReplyToAddresses: ["contact@culturays.com"],
-ConfigurationSetName: 'newsletter-tracking',
+ConfigurationSetName: 'my-first-configuration-set',
 Message: {
 Subject: { Data: subject },
 Body: {
