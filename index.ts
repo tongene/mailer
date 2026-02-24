@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import 'dotenv/config'
 import Fastify from 'fastify'
 import { createClient } from '@supabase/supabase-js'
@@ -12,6 +13,9 @@ image?:string
 url?:string
 excerpt?:string
 }
+import path from 'path'
+// This forces it to look for .env in the current directory
+dotenv.config({ path: path.join(__dirname, '../.env') }) 
 const fastify = Fastify({ logger: true })
 
 fastify.register(import ('@fastify/cors'), {
