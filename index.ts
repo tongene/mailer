@@ -37,7 +37,7 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
   const { campaigns } = req.body as { campaigns: CampaignProps[] }
 
   const { data } = await fastify.supabase
-    .from('newsletter_js')
+    .from('newsletter_subscribers')
     .select('email, name')
 
     for (const user of data??[]) {
@@ -88,6 +88,7 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
     </footer>
     </div>
   `;
+  
   // Send the email 
     await fastify.emailQueue.add('broadcast', {
        to: user?.email,
@@ -96,7 +97,6 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
       subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
     })
-
     
 } 
 

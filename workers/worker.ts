@@ -4,7 +4,7 @@ import { Worker } from 'bullmq'
 import { SendEmailCommand } from '@aws-sdk/client-ses'
 import {SESClient} from '@aws-sdk/client-ses'
 const ses = new SESClient({
-region: 'eu-north-1',
+region: 'us-east-1',
 credentials: {
 accessKeyId: process.env.AWS_ACCESS_KEY!,
 secretAccessKey: process.env.AWS_SECRET_KEY!
@@ -16,8 +16,6 @@ secretAccessKey: process.env.AWS_SECRET_KEY!
   password: process.env.REDIS_PASSWORD 
 };
 
-// In index.ts
-
 const worker = new Worker(
   'emails',
   async job => {
@@ -26,8 +24,9 @@ const worker = new Worker(
   const { to, subject, html } = job.data
 
  const command = new SendEmailCommand({
-Source: 'Urban Naija News <contact@culturays.com',
+Source: 'contact@culturays.com',
 Destination: { ToAddresses: [to] },
+ReplyToAddresses: ["contact@culturays.com"],
 Message: {
 Subject: { Data: subject },
 Body: {
@@ -57,10 +56,3 @@ worker.on('completed', job => {
 worker.on('failed', (job, err) => {
   console.error(`Email job ${job?.id} failed`, err)
 })
-
- 
-
-
-
-
- 
