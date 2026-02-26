@@ -8,8 +8,7 @@ import {Redis} from 'ioredis';
 
 const REDIS_PASS = process.env.REDIS_PASSWORD;
 import Fastify from 'fastify'
-import { createClient } from '@supabase/supabase-js'
- 
+import { createClient } from '@supabase/supabase-js' 
 
 export type CampaignProps={
 id?:number |string
@@ -39,7 +38,7 @@ fastify.decorate('supabase', supabase)
 const connection = new Redis({
   host: '127.0.0.1',
   port: 6379,
-  password: REDIS_PASS,
+  // password: REDIS_PASS,
   maxRetriesPerRequest: null,
 });
 
@@ -97,7 +96,7 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
         <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />
       
        <footer style="font-size: 13px; color: #999999; text-align: center;">
-         <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to Urban Naija News. <br/> style="color:#00796b;"><a>here</a>.</p>
+          <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to Urban Naija News. <br/><a>here</a>.</p>
 
     </footer>
     </div>

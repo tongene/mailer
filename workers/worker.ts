@@ -13,7 +13,7 @@ secretAccessKey: process.env.AWS_SECRET_KEY!
  const redisConnection = {
   host: '127.0.0.1',
   port: 6379,
-  password: process.env.REDIS_PASSWORD 
+password: process.env.REDIS_PASSWORD 
 };
  
 const worker = new Worker(
