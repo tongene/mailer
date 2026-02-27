@@ -51,7 +51,7 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
   const { campaigns } = req.body as { campaigns: CampaignProps[] }
 
   const { data } = await fastify.supabase
-    .from('newsletter_subscribers')
+    .from('newsletter_js_2')
     .select('email, name')
     .eq("unsubscribed", false);
     for (const user of data??[]) {
