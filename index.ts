@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import 'dotenv/config'
 import path from 'path'
+import crypto from "crypto";
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 import { Queue, Worker } from 'bullmq';
@@ -38,7 +39,7 @@ fastify.decorate('supabase', supabase)
 const connection = new Redis({
   host: '127.0.0.1',
   port: 6379,
-  // password: REDIS_PASS,
+  password: REDIS_PASS,
   maxRetriesPerRequest: null,
 });
 
@@ -52,8 +53,14 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
   const { data } = await fastify.supabase
     .from('newsletter_subscribers')
     .select('email, name')
-
+    .eq("unsubscribed", false);
     for (const user of data??[]) {
+      const token = crypto
+  .createHmac("sha256", process.env.UNSUBSCRIBE_SECRET!)
+  .update(user.email)
+  .digest("hex");
+
+const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.email}&token=${token}`;
       const postsHtml = campaigns
         .filter((p) => p.title)
         .map(
@@ -96,12 +103,20 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
         <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />
       
        <footer style="font-size: 13px; color: #999999; text-align: center;">
-          <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to Urban Naija News. <br/><a>here</a>.</p>
+          <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to. <br/><a>here</a>.</p>
 
+  <hr style="margin-top:30px" />
+  <p style="font-size:12px;color:#666;text-align:center">
+    You are receiving this email because you subscribed to Culturays — The Urban Naija News.
+    <br/>
+    <a href="${unsubscribeUrl}" style="color:#f97316;">
+      Unsubscribe
+    </a>
+  </p>
     </footer>
     </div>
   `;
-  
+ 
   // Send the email 
     await fastify.emailQueue.add('broadcast', {
        to: user?.email,

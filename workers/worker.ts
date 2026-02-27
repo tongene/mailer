@@ -13,7 +13,7 @@ secretAccessKey: process.env.AWS_SECRET_KEY!
  const redisConnection = {
   host: '127.0.0.1',
   port: 6379,
-password: process.env.REDIS_PASSWORD 
+  password: process.env.REDIS_PASSWORD 
 };
  
 const worker = new Worker(
@@ -28,12 +28,14 @@ Source: 'contact@culturays.com',
 Destination: { ToAddresses: [to] },
 ReplyToAddresses: ["contact@culturays.com"],
 ConfigurationSetName: 'my-first-configuration-set',
+
 Message: {
 Subject: { Data: subject },
 Body: {
-Html: { Data: html }
-}
-}
+Html: { Data: html },
+},
+},
+
 })
 
 await ses.send(command)
