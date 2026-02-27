@@ -102,9 +102,7 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
 
         <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />
       
-       <footer style="font-size: 13px; color: #999999; text-align: center;">
-          <p style="font-size:14px; color:#777;">You're receiving this email because you subscribed to. <br/><a>here</a>.</p>
-
+       <footer style="font-size: 13px; color: #999999; text-align: center;"> 
   <hr style="margin-top:30px" />
   <p style="font-size:12px;color:#666;text-align:center">
     You are receiving this email because you subscribed to Culturays — The Urban Naija News.

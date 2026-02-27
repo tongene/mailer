@@ -24,7 +24,7 @@ const worker = new Worker(
   const { to, subject, html } = job.data
 
  const command = new SendEmailCommand({
-Source: 'contact@culturays.com',
+Source: "Culturays — Urban Naija News <contact@culturays.com>",
 Destination: { ToAddresses: [to] },
 ReplyToAddresses: ["contact@culturays.com"],
 ConfigurationSetName: 'my-first-configuration-set',
