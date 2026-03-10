@@ -116,6 +116,7 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
           Warm regards,<br>
           <strong>Urban Naija</strong>
         </p>
+          <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 15%; border-radius: 6px; margin-bottom: 20px;" />
        <hr style="margin: 40px 0; border: none; border-top: 1px solid #0c0f8f;" />        
        <h2 style="font-size: 22px; color: #2c3e50; margin: 10px 0;">News Made for You</h2>
 
@@ -140,8 +141,7 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
     </a> <br/>
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
-    </a> <br/>
-     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 15%; border-radius: 6px; margin-bottom: 20px;" />
+    </a> <br/>  
 
   <p style="font-size:12px;color:#666;text-align:center">
     You are receiving this email because you subscribed to Culturays — The Urban Naija News.
