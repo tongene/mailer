@@ -104,7 +104,7 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
     </a> <br/>
-     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />
+     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 15%; border-radius: 6px; margin-bottom: 20px;" />
   </p>
     <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />  
        <p style="font-size: 35px; color: #2c3e50; margin: 10px 0; font-weight: bold;">Have you seen our AI Aid?<a href="https://culturays.com/naija-events/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Try it!</a></p>
@@ -141,7 +141,7 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
     </a> <br/>
-     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />
+     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 15%; border-radius: 6px; margin-bottom: 20px;" />
 
   <p style="font-size:12px;color:#666;text-align:center">
     You are receiving this email because you subscribed to Culturays — The Urban Naija News.
