@@ -20,6 +20,7 @@ html?:string
 image?:string
 url?:string
 excerpt?:string
+video?:string
 }
  
 const fastify = Fastify({ logger: true })
@@ -60,19 +61,22 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
   .update(user.email)
   .digest("hex");
 
-const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.email}&token=${token}`;
-      const postsHtml = campaigns
+const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.email}&token=${token}`;   
+
+const postsHtml = campaigns
         .filter((p) => p.title)
         .map(
-          (p) => `
-           
+          (p) => `           
            <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+             <video controls autoplay class="vertical-video"; height="60%"; aspect-ratio:9/16;>
+           <source src="${p.video}">
+        </video>
            
         ${p.image? `<img src=${p.image} alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`: `<img src='https://culturays.com/opengraph-image.png' alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`}
 
         <h2 style="font-size: 22px; color: #2c3e50; margin: 10px 0;">${p.title}</h2>
      ${p.url ? `<p><a href="${p.url}" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Read Full Post</a></p>` : ""}
-        <p style="font-size: 16px; color: #444444; line-height: 1.6;">
+        <p style="font-size: 16px; color: #444444; line-height: 1.6px;">
           ${p.excerpt}
         </p> 
       </div> 
@@ -104,7 +108,8 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
     </a> <br/>
-     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 15%; border-radius: 6px; margin-bottom: 20px;" />
+ 
+     <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 25%; border-radius: 6px; margin-bottom: 20px;" />
   </p>
     <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />  
        <p style="font-size: 35px; color: #2c3e50; margin: 10px 0; font-weight: bold;">Have you seen our AI Aid?<a href="https://culturays.com/naija-events/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Try it!</a></p>
@@ -116,7 +121,7 @@ const unsubscribeUrl = `https://culturays.com/api/unsubscribed?email=${user.emai
           Warm regards,<br>
           <strong>Urban Naija</strong>
         </p>
-          <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 15%; border-radius: 6px; margin-bottom: 20px;" />
+          <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays" style="width: 25%; border-radius: 6px; margin-bottom: 20px;" />
        <hr style="margin: 40px 0; border: none; border-top: 1px solid #0c0f8f;" />        
        <h2 style="font-size: 22px; color: #2c3e50; margin: 10px 0;">News Made for You</h2>
 
