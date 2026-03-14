@@ -76,7 +76,7 @@ const postsHtml = campaigns
 
         <h2 style="font-size: 22px; color: #2c3e50; margin: 10px 0;">${p.title}</h2>
      ${p.url ? `<p><a href="${p.url}" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Read Full Post</a></p>` : ""}
-        <p style="font-size: 16px; color: #444444; line-height: 1.6px;">
+        <p style="font-size: 16px; color: #444444; line-height: 1.6;">
           ${p.excerpt}
         </p> 
       </div> 
