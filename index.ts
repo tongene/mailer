@@ -68,7 +68,7 @@ const postsHtml = campaigns
         .map(
           (p) => `           
            <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-             ${ p.video!==''&&p.video!==""? `<video controls autoplay class="vertical-video"; height="60%"; aspect-ratio:9/16;>
+             ${ p.video? `<video controls autoplay class="vertical-video"; height="60%"; aspect-ratio:9/16;>
            <source src="${p.video}"/>
         </video>`:""}
            
