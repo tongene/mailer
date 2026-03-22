@@ -18,12 +18,30 @@ secretAccessKey: process.env.AWS_SECRET_KEY!
  
 const worker = new Worker(
   'emails',
-  async job => {
-    // console.log('Sending email to:', job.data.to)
- 
+  async job => {  
   const { to, subject, html } = job.data
+  if (job.name === "contact") {
+  const command = new SendEmailCommand({
+ Source: "Tini Tasks <info@gowork.africareinvented.com>",
+ Destination: { ToAddresses: [to] },
+ ReplyToAddresses: ["info@gowork.africareinvented.com"],
+ ConfigurationSetName: 'my-first-configuration-set',
+ 
+ Message: {
+ Subject: { Data: subject },
+ Body: {
+ Html: { Data: html },
+ },
+ },
+ 
+ })
+ 
+ await ses.send(command)
+  }
 
- const command = new SendEmailCommand({
+  if (job.name === "broadcast") {
+    // handle newsletter email
+  const command = new SendEmailCommand({
 Source: "Culturays — Urban Naija News <contact@culturays.com>",
 Destination: { ToAddresses: [to] },
 ReplyToAddresses: ["contact@culturays.com"],
@@ -38,8 +56,9 @@ Html: { Data: html },
 
 })
 
-await ses.send(command)
-    return true
+await ses.send(command) 
+}
+  return true
   },
    { connection:
      redisConnection,

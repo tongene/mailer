@@ -26,7 +26,7 @@ video?:string
 const fastify = Fastify({ logger: true })
 
 fastify.register(import ('@fastify/cors'), {
-  origin: ['http://localhost:3000', 'https://culturays.com', 'http://34.116.251.165']
+  origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://34.116.251.165']
 })
 
 /* SUPABASE */
@@ -68,9 +68,9 @@ const postsHtml = campaigns
         .map(
           (p) => `           
            <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-               ${ p.video? `<a href="${p.video}" style="position:relative; display:inline-block;">
-  <img src="https://culturays.com/opengraph-image.png" alt="Watch video" />
-  <p style="width: 200px; height: 200px; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">>></p>
+                     ${ p.video? `<a href="${p.video}" style="position:relative; display:inline-block;">
+  <img src="https://culturays.com/opengraph-image.png" alt="Watch video" style="width: 200px; height: 200px; />
+  <p style="width: 100px; height: 100px; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">>></p>
 </a>`:""}
            
         ${p.image? `<img src=${p.image} alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`: `<img src='https://culturays.com/opengraph-image.png' alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`}
@@ -175,6 +175,89 @@ const postsHtml = campaigns
 return { scheduled: data?.length ?? 0 }
 })
 
+fastify.post('/admin/contact-letter', async (req, reply ) => {
+  const { loggedInUser, profile } = req.body as { loggedInUser:{name:string, email:string}, profile:{name:string, email:string, user_img:string} }
+ 
+      const htmlContent = `
+       <h2 style="color:#2c3e50;">Today's Top Stories</h2> 
+    <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+        
+  <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />  
+     <p style="font-size:18px;color: #6677; text-align:center">
+    Avoid AI Misinformation — Read Only Verified News here.
+    <br/>
+    <a href="https://culturays.com/" style="color:#f97316;">
+      Culturays — The Urban Naija News
+    </a>
+     <br/>
+    <a href="https://www.instagram.com/culturays_/" style="color:#f97316;">
+      Instagram
+    </a> <br/>
+     <a href="https://www.facebook.com/CulturaysSpot/" style="color:#f97316;">
+     Facebook
+    </a> <br/>
+     <a href="https://x.com/culturays" style="color:#f97316;">
+      X
+    </a> <br/>
+     <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
+      Youtube
+    </a> <br/>
+ 
+     <img src="https://gowork.africareinvented.com/qrcode_gowork.africareinvented.com.png" alt="Scan to Visit Tini Tasks" style="width: 25%; border-radius: 6px; margin-bottom: 20px;" />
+  </p>
+    <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />  
+       <p style="font-size: 35px; color: #2c3e50; margin: 10px 0; font-weight: bold;">Have you seen our AI Aid?<a href="https://culturays.com/naija-events/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Try it!</a></p>
+       
+       <hr style="margin: 40px 0; border: none; border-top: 1.5px solid #0c0f8f;" />    
+         <p style="font-size: 16px; color: #333333; text-transform: capitalize;">Hi, ${profile.name}</p>
+ <p style="font-size: 16px; color: #333333; text-transform: capitalize;">${loggedInUser?.name} wants to contact you. Log in to respond.<a href="https://gowork.africareinvented.com/sign-in"> Sign in </a></p>
+    <p style="margin-top: 30px; font-size: 15px; color: #333333;">
+          Warm regards,<br>
+          <strong>Tini Tasks</strong>
+        </p>
+          <img src="https://gowork.africareinvented.com/qrcode_gowork.africareinvented.com.png" alt="Scan to Visit TiniTasks" style="width: 25%; border-radius: 6px; margin-bottom: 20px;" />
+       <hr style="margin: 40px 0; border: none; border-top: 1px solid #0c0f8f;" />        
+       <h2 style="font-size: 22px; color: #2c3e50; margin: 10px 0;">News Made for You</h2>
+
+        <img src="https://culturays.com/tinitasks.jpg/" alt="Tini Tasks Poster" style="width: 70%; border-radius: 6px; margin-bottom: 20px;" />
+
+        <p><a href="https://gowork.africareinvented.com/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Connect. Collaborate. Conquer on Tini Tasks</a></p>   
+      
+       <footer style="font-size: 13px; color: #999999; text-align: center; height:300px"> 
+     <hr style="margin: 40px 0; border: none; border-top: 1px solid #0c0f8f;" />
+      <br/>
+    <a href="https://gowork.africareinvented.com/" style="color:#f97316;">
+      Tini Tasks — Collaborate & Conquer
+    </a> <br/>
+    <a href="https://www.instagram.com/culturays_/" style="color:#f97316;">
+      Instagram
+    </a> <br/>
+     <a href="https://www.facebook.com/CulturaysSpot/" style="color:#f97316;">
+     Facebook
+    </a> <br/>
+     <a href="https://x.com/culturays" style="color:#f97316;">
+      X
+    </a> <br/>
+     <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
+      Youtube
+    </a> <br/>  
+ 
+    <hr style="margin-top:30px" />
+    </footer>
+    </div>
+  `;
+ 
+  // Send the email 
+    await fastify.emailQueue.add('contact', {
+      type: "contact",
+       to: profile.email,
+       from: "Tini Tasks — <info@gowork.africareinvented.com>",
+       replyTo: "info@gowork.africareinvented.com",
+      subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
+      html: htmlContent,
+    })    
+} 
+)
  
 // Add this at the top of index.ts to handle AWS SNS text/plain bodies
 fastify.addContentTypeParser('text/plain', { parseAs: 'string' }, (req, body, done) => {
