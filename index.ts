@@ -270,7 +270,7 @@ fastifyX.post('/admin/contact-letter', async (req, reply ) => {
   `;
  
   // Send the email 
-    await fastify.emailQueue.add('contact', {
+    await fastifyX.emailQueue.add('contact', {
       type: "contact",
        to: profile.email,
        from: "Tini Tasks — <info@gowork.africareinvented.com>",
