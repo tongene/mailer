@@ -275,8 +275,8 @@ fastifyX.post('/admin/contact-letter', async (req, reply ) => {
     await fastifyX.emailQueue.add('contact', {
       type: "contact",
        to: profile.email,
-       from: "Tini Tasks — <info@gowork.africareinvented.com>",
-       replyTo: "info@gowork.africareinvented.com",
+       from: "Tini Tasks — <contact@culturays.com>",
+       replyTo: "contact@culturays.com",
       subject: `Someone wants to contact you - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
     }) 

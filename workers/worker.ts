@@ -24,7 +24,7 @@ const worker = new Worker(
   const command = new SendEmailCommand({
  Source: "Culturays <contact@culturays.com>",
  Destination: { ToAddresses: [to] },
- ReplyToAddresses: ["info@gowork.africareinvented.com"],
+ ReplyToAddresses: ["contact@culturays.com"],
  ConfigurationSetName: 'my-first-configuration-set',
  
  Message: {
