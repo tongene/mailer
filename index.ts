@@ -24,29 +24,51 @@ video?:string
 }
  
 const fastify = Fastify({ logger: true })
-
+const fastifyX = Fastify({ logger: true })
 fastify.register(import ('@fastify/cors'), {
   origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://34.116.251.165']
 })
-
+fastifyX.register(import ('@fastify/cors'), {
+  origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://34.116.251.165']
+})
 /* SUPABASE */
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
-
+const supabaseUltra = createClient(
+  process.env.SUPABASE_URL_TINI_TASKS!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY_TINI_TASKS!
+)
 fastify.decorate('supabase', supabase)
-
+fastifyX.decorate('supabase', supabaseUltra)
 const connection = new Redis({
   host: '127.0.0.1',
   port: 6379,
   password: REDIS_PASS,
   maxRetriesPerRequest: null,
 });
+fastify.addContentTypeParser('text/plain', { parseAs: 'string' }, (req, body, done) => {
+  try {
+    const json = JSON.parse(body as string)
+    done(null, json)
+  } catch (err) {
+    done(null, body)
+  }
+})
+fastifyX.addContentTypeParser('text/plain', { parseAs: 'string' }, (req, body, done) => {
+  try {
+    const json = JSON.parse(body as string)
+    done(null, json)
+  } catch (err) {
+    done(null, body)
+  }
+})
 
 connection.on('error', (err) => console.error('Redis Connection Error:', err));
 const emailQueue = new Queue('emails', { connection: connection });
 fastify.decorate('emailQueue', emailQueue)
+fastifyX.decorate('emailQueue', emailQueue)
 
 fastify.post('/admin/send-newsletter', async (req, reply ) => {
   const { campaigns } = req.body as { campaigns: CampaignProps[] }
@@ -175,7 +197,7 @@ const postsHtml = campaigns
 return { scheduled: data?.length ?? 0 }
 })
 
-fastify.post('/admin/contact-letter', async (req, reply ) => {
+fastifyX.post('/admin/contact-letter', async (req, reply ) => {
   const { loggedInUser, profile } = req.body as { loggedInUser:{name:string, email:string}, profile:{name:string, email:string, user_img:string} }
  
       const htmlContent = `
@@ -260,14 +282,6 @@ fastify.post('/admin/contact-letter', async (req, reply ) => {
 )
  
 // Add this at the top of index.ts to handle AWS SNS text/plain bodies
-fastify.addContentTypeParser('text/plain', { parseAs: 'string' }, (req, body, done) => {
-  try {
-    const json = JSON.parse(body as string)
-    done(null, json)
-  } catch (err) {
-    done(null, body)
-  }
-})
 
 // The Webhook Route
 fastify.post('/webhooks/ses', async (request, reply) => {
@@ -310,4 +324,7 @@ fastify.post('/webhooks/ses', async (request, reply) => {
 
   return { ok: true }
 })
+
+ 
 fastify.listen({ port: 4000, host: '0.0.0.0' })
+fastifyX.listen({ port: 4000, host: '0.0.0.0' })
