@@ -198,8 +198,10 @@ return { scheduled: data?.length ?? 0 }
 })
 
 fastifyX.post('/admin/contact-letter', async (req, reply ) => {
-  const { loggedInUser, profile } = req.body as { loggedInUser:{name:string, email:string}, profile:{name:string, email:string, user_img:string} }
- 
+  const { loggedInUser, profile } = req.body as any
+ if (!loggedInUser) {
+  return reply.status(401).send({ error: "Unauthorized" });
+}
       const htmlContent = `
        <h2 style="color:#2c3e50;">Today's Top Stories</h2> 
     <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
@@ -277,11 +279,10 @@ fastifyX.post('/admin/contact-letter', async (req, reply ) => {
        replyTo: "info@gowork.africareinvented.com",
       subject: `Someone wants to contact you - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
-    })    
-} 
-)
- 
-// Add this at the top of index.ts to handle AWS SNS text/plain bodies
+    }) 
+    return reply.send({ success: true });   
+})
+
 
 // The Webhook Route
 fastify.post('/webhooks/ses', async (request, reply) => {
