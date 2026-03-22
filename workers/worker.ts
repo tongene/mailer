@@ -22,7 +22,7 @@ const worker = new Worker(
   const { to, subject, html } = job.data
   if (job.name === "contact") {
   const command = new SendEmailCommand({
- Source: "Tini Tasks <info@gowork.africareinvented.com>",
+ Source: "Culturays <contact@culturays.com>",
  Destination: { ToAddresses: [to] },
  ReplyToAddresses: ["info@gowork.africareinvented.com"],
  ConfigurationSetName: 'my-first-configuration-set',
