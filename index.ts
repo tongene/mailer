@@ -253,7 +253,7 @@ fastify.post('/admin/contact-letter', async (req, reply ) => {
        to: profile.email,
        from: "Tini Tasks — <info@gowork.africareinvented.com>",
        replyTo: "info@gowork.africareinvented.com",
-      subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
+      subject: `Someone wants to contact you - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
     })    
 } 
