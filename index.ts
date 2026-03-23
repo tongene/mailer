@@ -233,8 +233,8 @@ fastifyX.post('/admin/contact-letter', async (req, reply ) => {
        <p style="font-size: 35px; color: #2c3e50; margin: 10px 0; font-weight: bold;">Have you seen our AI Aid?<a href="https://culturays.com/naija-events/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Try it!</a></p>
        
        <hr style="margin: 40px 0; border: none; border-top: 1.5px solid #0c0f8f;" />    
-         <p style="font-size: 16px; color: #333333; text-transform: capitalize;">Hi, ${profile.name}</p>
- <p style="font-size: 16px; color: #333333; text-transform: capitalize;">${loggedInUser?.name} wants to contact you. Log in to respond.<a href="https://gowork.africareinvented.com/sign-in"> Sign in </a></p>
+         <p style="font-size: 16px; color: #333333; text-transform: capitalize;">Hi, ${profile.full_name}</p>
+ <p style="font-size: 16px; color: #333333; text-transform: capitalize;">Someone wants to contact you. Log in to respond.<a href="https://gowork.africareinvented.com/sign-in"> Sign in </a></p>
     <p style="margin-top: 30px; font-size: 15px; color: #333333;">
           Warm regards,<br>
           <strong>Tini Tasks</strong>
