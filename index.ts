@@ -90,26 +90,10 @@ const postsHtml = campaigns
         .map(
           (p) => `           
            <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
- ${ p.video ? `
-<div style="margin: 20px 0; text-align: center;">
-  <a href="${p.video}" style="text-decoration: none; display: inline-block; position: relative; width: 100%; max-width: 500px;">
-    <!-- Main Thumbnail -->
-    <img src="https://culturays.com/opengraph-image.png" 
-         alt="Watch video" 
-         style="width: 100%; max-width: 500px; height: auto; display: block; border-radius: 12px; border: 1px solid #eeeeee;" />
-    
-    <!-- Play Button Overlay -->
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0,0,0,0.7); border-radius: 50%; line-height: 60px; text-align: center;">
-      <span style="color: #ffffff; font-size: 30px; margin-left: 5px;">▶</span>
-    </div>
-    
-    <!-- Video Label -->
-    <p style="margin-top: 10px; color: #444444; font-family: Arial, sans-serif; font-weight: bold; text-decoration: underline;">
-      Click to watch video >>
-    </p>
-  </a>
-</div>
-` : ""} 
+                     ${ p.video? `<a href="${p.video}" style="position:relative; display:inline-block;">
+  <img src="https://culturays.com/opengraph-image.png" alt="Watch video" style="width: 350px; height: 350px; />
+  <p style="width: 300px; height: 300px; position:absolute; top:50%; bottom:50%; left:50%; transform:translate(-50%, -50%);">>></p>
+</a>`:""}
            
         ${p.image? `<img src=${p.image} alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`: `<img src='https://culturays.com/opengraph-image.png' alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`}
 
@@ -185,6 +169,9 @@ const postsHtml = campaigns
     </a> <br/>
      <a href="https://x.com/culturays" style="color:#f97316;">
       X
+    </a> <br/>
+     <a href="https://whatsapp.com/channel/0029VaH6uMMFsn0dN8Vzwr2v" style="color:#f97316;">
+     WhatsApp
     </a> <br/>
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
