@@ -186,7 +186,7 @@ const postsHtml = campaigns
   // Send the email 
     await fastify.emailQueue.add('broadcast', {
        to: user?.email,
-       from: "Urban Naija News — <contact@culturays.com>",
+       from: "Culturays — The Urban Naija News — <contact@culturays.com>",
        replyTo: "contact@culturays.com",
       subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
@@ -328,4 +328,3 @@ fastify.post('/webhooks/ses', async (request, reply) => {
 
  
 fastify.listen({ port: 4000, host: '0.0.0.0' })
-fastifyX.listen({ port: 4000, host: '0.0.0.0' })
