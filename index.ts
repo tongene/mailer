@@ -144,6 +144,9 @@ const postsHtml = campaigns
      <a href="https://x.com/culturays" style="color:#f97316;">
       X
     </a> <br/>
+     <a href="https://whatsapp.com/channel/0029VaH6uMMFsn0dN8Vzwr2v" style="color:#f97316;">
+     WhatsApp
+    </a> <br/>
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
     </a> <br/>
