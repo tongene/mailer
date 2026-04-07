@@ -92,7 +92,7 @@ const postsHtml = campaigns
            <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
                      ${ p.video? `<a href="${p.video}" style="position:relative; display:inline-block;">
   <img src="https://culturays.com/opengraph-image.png" alt="Watch video" style="width: 200px; height: 200px; />
-  <p style="width: 100px; height: 100px; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">>></p>
+  <p style="width: 300px; height: 300px; position:absolute; top:50%; bottom:50%; left:50%; transform:translate(-50%, -50%);">>></p>
 </a>`:""}
            
         ${p.image? `<img src=${p.image} alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`: `<img src='https://culturays.com/opengraph-image.png' alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`}
