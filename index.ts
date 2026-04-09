@@ -92,7 +92,7 @@ const postsHtml = campaigns
            <div style="max-width: 600px; margin: auto; font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
                      ${ p.video? `<a href="${p.video}" style="position:relative; display:inline-block;">
   <img src="https://culturays.com/opengraph-image.png" alt="Watch video" style="width: 350px; height: 350px; />
-  <p style="width: 300px; height: 300px; position:absolute; top:50%; bottom:50%; left:50%; transform:translate(-50%, -50%);">>></p>
+  <p style="width: 400px; height: 300px; position:absolute; top:50%; bottom:50%; left:50%; transform:translate(-50%, -50%);">>></p>
 </a>`:""}
            
         ${p.image? `<img src=${p.image} alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`: `<img src='https://culturays.com/opengraph-image.png' alt="Newsletter Banner" style="width: 100%; border-radius: 6px; margin-bottom: 20px;" />`}
@@ -138,7 +138,8 @@ const postsHtml = campaigns
      <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 25%; border-radius: 6px; margin-bottom: 20px;" />
   </p>
     <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />  
-       <p style="font-size: 35px; color: #2c3e50; margin: 10px 0; font-weight: bold;">Have you seen our AI Aid?<a href="https://culturays.com/naija-events/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Try it!</a></p>
+     
+    <p style="font-size: 35px; color: #2c3e50; margin: 10px 0; font-weight: bold;">Have you seen our AI Aid?<a href="https://culturays.com/naija-events/" style="display:inline-block;margin-top:1em;padding:0.5em 1em;background:#0070f3;color:white;text-decoration:none;border-radius:5px;">Try it!</a></p>
        
        <hr style="margin: 40px 0; border: none; border-top: 1.5px solid #0c0f8f;" />    
          <p style="font-size: 16px; color: #333333; text-transform: capitalize;">Hi ${user?.name},</p>
