@@ -3,6 +3,8 @@ dotenv.config();
 import { Worker } from 'bullmq'
 import { SendEmailCommand } from '@aws-sdk/client-ses'
 import {SESClient} from '@aws-sdk/client-ses'
+import { createClient } from '@supabase/supabase-js' 
+
 const ses = new SESClient({
 region: 'us-east-1',
 credentials: {
@@ -33,10 +35,20 @@ const worker = new Worker(
  Html: { Data: html },
  },
  },
- 
+   
+  
  })
- 
+
  await ses.send(command)
+  const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+    const { data, error } = await supabase
+      .from("campaigns") 
+      .update({ status: "sent" })
+      .in("id", [to])
+      .select()
   }
 
   if (job.name === "broadcast") {
@@ -72,7 +84,9 @@ await ses.send(command)
 )
 
 worker.on('completed', job => {
-  console.log(`Email job ${job.id} completed`)
+ return {}
+    //  console.log(error)
+  //console.log(`Email job ${job.id} completed`)
 })
 
 worker.on('failed', (job, err) => {

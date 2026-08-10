@@ -26,10 +26,10 @@ video?:string
 const fastify = Fastify({ logger: true })
 const fastifyX = Fastify({ logger: true })
 fastify.register(import ('@fastify/cors'), {
-  origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://34.116.251.165']
+  origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://35.255.118.245']
 })
 fastifyX.register(import ('@fastify/cors'), {
-  origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://34.116.251.165']
+  origin: ['http://localhost:3000', 'https://culturays.com', 'https://gowork.africareinvented.com', 'http://35.255.118.245']
 })
 /* SUPABASE */
 const supabase = createClient(
@@ -77,6 +77,7 @@ fastify.post('/admin/send-newsletter', async (req, reply ) => {
     .from('newsletter_subscribers')
     .select('email, name')
     .eq("unsubscribed", false);
+    
     for (const user of data??[]) {
       const token = crypto
   .createHmac("sha256", process.env.UNSUBSCRIBE_SECRET!)
@@ -119,9 +120,7 @@ const postsHtml = campaigns
       Culturays — The Urban Naija News
     </a>
      <br/>
-        <a href="https://muckrack.com/culturays" style="color:#f97316;">
-     Muck Rack, Culturays — The Urban Naija News
-    </a> <br/>
+     
     <a href="https://www.instagram.com/culturays_/" style="color:#f97316;">
       Instagram
     </a> <br/>
@@ -137,7 +136,9 @@ const postsHtml = campaigns
      <a href="https://www.youtube.com/@Culturays" style="color:#f97316;">
       Youtube
     </a> <br/>
- 
+    <a href="https://muckrack.com/culturays" style="color:#f97316;">
+     Muck Rack, Culturays — The Urban Naija News
+    </a> <br/>
      <img src="https://culturays.com/qrcode_culturays.com.png" alt="Scan to Visit Culturays Poster" style="width: 25%; border-radius: 6px; margin-bottom: 20px;" />
   </p>
     <hr style="margin: 40px 0; border: none; border-top: 1px solid #eaeaea;" />  
@@ -298,26 +299,24 @@ fastifyX.post('/admin/contact-letter', async (req, reply ) => {
 fastify.post('/webhooks/ses', async (request, reply) => {
   const body = request.body as any
 
-  // When you first add the URL to AWS, they send a "SubscriptionConfirmation"
   if (body.Type === 'SubscriptionConfirmation') {
     console.log('Confirming SNS Subscription...')
-    // Use a simple fetch to confirm the subscription
+ 
     await fetch(body.SubscribeURL)
     return { status: 'confirmed' }
   }
 
-  // 2. HANDLE SES NOTIFICATIONS
   if (body.Type === 'Notification') {
     const message = JSON.parse(body.Message)
-    const notificationType = message.notificationType // 'Bounce', 'Complaint', or 'Delivery'
+    const notificationType = message.notificationType 
     const mail = message.mail
+    console.log(message)
     const emailAddress = mail.destination[0]
 
     console.log(`SES Event: ${notificationType} for ${emailAddress}`)
 
-    // 3. UPDATE SUPABASE
     if (notificationType === 'Bounce' || notificationType === 'Complaint') {
-      // Mark user as unsubscribed or "bounced" so you don't mail them again
+    
       await fastify.supabase
         .from('newsletter_subscribers')
         .update({ 
@@ -328,7 +327,6 @@ fastify.post('/webhooks/ses', async (request, reply) => {
     } 
     
     else if (notificationType === 'Delivery') {
-      // Optional: Log successful delivery
       console.log(`Successfully delivered to ${emailAddress}`)
     }
   }
