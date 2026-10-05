@@ -206,7 +206,7 @@ const postsHtml = campaigns
      const { data:postData, error } = await supabase
        .from("campaigns")
        .update({ status: "sent" })
-       .in("id", id)
+       .in("id", [id])
        .select();
     
 } 
