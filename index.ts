@@ -202,7 +202,7 @@ const postsHtml = campaigns
       subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
     })
-    const [id]=campaigns
+    const [id]=campaigns as CampaignProps[]
      const { data:postData, error } = await supabase
        .from("campaigns")
        .update({ status: "sent" })
