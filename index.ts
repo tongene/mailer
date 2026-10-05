@@ -202,6 +202,12 @@ const postsHtml = campaigns
       subject: `Today's Top Stories - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
     })
+    const [id]=campaigns
+     const { data:postData, error } = await supabase
+       .from("campaigns")
+       .update({ status: "sent" })
+       .in("id", id)
+       .select();
     
 } 
 
@@ -291,6 +297,7 @@ fastifyX.post('/admin/contact-letter', async (req, reply ) => {
       subject: `Someone wants to contact you - ${new Date().toLocaleDateString()}`,
       html: htmlContent,
     }) 
+ 
     return reply.send({ success: true });   
 })
 

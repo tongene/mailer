@@ -22,6 +22,7 @@ const worker = new Worker(
   'emails',
   async job => {  
   const { to, subject, html } = job.data
+  
   if (job.name === "contact") {
   const command = new SendEmailCommand({
  Source: "Culturays <contact@culturays.com>",
@@ -40,15 +41,7 @@ const worker = new Worker(
  })
 
  await ses.send(command)
-  const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-    const { data, error } = await supabase
-      .from("campaigns") 
-      .update({ status: "sent" })
-      .in("id", [to])
-      .select()
+ 
   }
 
   if (job.name === "broadcast") {
@@ -69,6 +62,7 @@ Html: { Data: html },
 })
 
 await ses.send(command) 
+ 
 }
   return true
   },
